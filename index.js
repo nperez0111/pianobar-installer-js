@@ -19,9 +19,6 @@ const inquirer = require( 'inquirer' ),
             fs.mkdirSync( dir );
         }
     },
-    questions = [ {
-
-    } ],
     run = () => {
         commandExists( 'pianobar' ).catch( () => {
                 //pianobar doesn't exist so lets install it
@@ -38,10 +35,10 @@ const inquirer = require( 'inquirer' ),
         } ).then( () => {
         //pianobar exists lets keep going
         makedirIfNotExists( path )
-        inquirer.prompt( questions ).then( answers => {
-            del( path + '/config' ).catch( a => a ).then( () => {
-                logToFile( path + '/config' ).log( config( answers ) )
-            } )
-        } )
+        config()
     } )
 }
+if ( !module.parent ) {
+    run()
+}
+module.exports = run
