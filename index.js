@@ -10,15 +10,8 @@ const inquirer = require( 'inquirer' ),
     homedir = require( 'homedir' ),
     path = homedir() + '/.config/pianobar',
     config = require( './config' ),
-    err = which => a => {
-        log( a )
-        throw new Error( `${which} install failed` )
-    },
-    makedirIfNotExists = dir => {
-        if ( !fs.existsSync( dir ) ) {
-            fs.mkdirSync( dir );
-        }
-    },
+    err = shared.err,
+    makedirIfNotExists = shared.makedirIfNotExists,
     run = () => {
         commandExists( 'pianobar' ).catch( () => {
                 //pianobar doesn't exist so lets install it

@@ -47,9 +47,9 @@ format_msg_err = [90m/!\[0m %s
 format_msg_question = [97m[?][0m %s
 format_msg_debug = [90m%s[0m`,
     run = () => {
-        inquirer.prompt( questions ).then( answers => {
-            del( path + '/config' ).catch( a => a ).then( () => {
-                logToFile( path + '/config' ).log( config( answers ) )
+        return inquirer.prompt( questions ).then( answers => {
+            return del( path + '/config' ).catch( a => a ).then( () => {
+                return logToFile( path + '/config' ).log( config( answers ) )
             } )
         } )
     }

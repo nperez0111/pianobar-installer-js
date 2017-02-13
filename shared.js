@@ -25,5 +25,14 @@ module.exports = {
                 resolve( data )
             } )
         } )
+    },
+    err: which => a => {
+        log( a )
+        throw new Error( `${which} install failed` )
+    },
+    makedirIfNotExists: dir => {
+        if ( !fs.existsSync( dir ) ) {
+            fs.mkdirSync( dir );
+        }
     }
 }
