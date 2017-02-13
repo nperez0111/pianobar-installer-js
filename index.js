@@ -3,5 +3,45 @@ const inquirer = require( 'inquirer' ),
     del = require( 'del' ),
     execa = require( 'execa' ),
     shared = require( './shared' ),
+    log = require( './debug' ),
     logToFile = shared.logToAFile,
-    readFile = shared.readFile
+    readFile = shared.readFile,
+    brew = execa.bind( execa, 'brew' ),
+    homedir = require( 'homedir' ),
+    path = homedir() + '/.config/pianobar',
+    config = require( './config' ),
+    err = which => a => {
+        log( a )
+        throw new Error( `${which} install failed` )
+    },
+    makedirIfNotExists = dir => {
+        if ( !fs.existsSync( dir ) ) {
+            fs.mkdirSync( dir );
+        }
+    },
+    questions = [ {
+
+    } ],
+    run = () => {
+        commandExists( 'pianobar' ).catch( () => {
+                //pianobar doesn't exist so lets install it
+                commandExists( 'brew' ).catch( () => {
+                    //brew doesn't exists so lets install it
+                    return execa( '/usr/bin/ruby', [ '-e', '"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"' ] ).catch( err( 'Brew' ) )
+                } ).then( () => {
+                    //brew is installed so let's do it
+                    return brew( [ 'update' ] )
+                        .catch( err( 'brew update' ) )
+                        .then( brew( [ 'install', 'pianobar' ] ) )
+                        .catch( err( 'Pianobar' ) )
+                } ) )
+        } ).then( () => {
+        //pianobar exists lets keep going
+        makedirIfNotExists( path )
+        inquirer.prompt( questions ).then( answers => {
+            del( path + '/config' ).catch( a => a ).then( () => {
+                logToFile( path + '/config' ).log( config( answers ) )
+            } )
+        } )
+    } )
+}

@@ -5,7 +5,6 @@ const shared = require( './shared' ),
     execa = require( 'execa' ),
     libaoLoc = '/usr/local/Library/Formula/libao.rb',
     run = () => {
-        console.log( libaoLoc )
         del( libaoLoc ).then( () => {
             readFile( 'libaoFix.txt' ).then( data => {
                 logToFile( libaoLoc ).log( data )
