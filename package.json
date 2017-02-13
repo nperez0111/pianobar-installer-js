@@ -1,0 +1,27 @@
+{
+  "name": "pianobar-installer-js",
+  "version": "1.0.0",
+  "description": "Pianobar Installer",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nperez0111/pianobar-installer-js.git"
+  },
+  "author": "Nick the Sick",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nperez0111/pianobar-installer-js/issues"
+  },
+  "homepage": "https://github.com/nperez0111/pianobar-installer-js#readme",
+  "dependencies": {
+    "command-exists": "^1.2.0",
+    "del": "^2.2.2",
+    "execa": "^0.6.0",
+    "inquirer": "^3.0.1",
+    "load-json-file": "^2.0.0",
+    "write-json-file": "^2.0.0"
+  }
+}
