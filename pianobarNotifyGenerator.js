@@ -2,6 +2,7 @@ const homedir = require( 'homedir' )(),
     youSure = require( './youSure' ),
     loadJson = require( 'load-json-file' ),
     logToFile = require( './shared' ).logToAFile,
+    execa = require( 'execa' ),
     text = ( { appIcon = homedir + '/.config/pianobar/PandoraIco.png' } ) => `
 #!/usr/bin/ruby
 require 'json'
@@ -18,17 +19,21 @@ elsif trigger == 'userlogin'
 	system('terminal-notifier -title "Pianobar Started" -message "Welcome back" -group "Pianobar" -appIcon "#{appIcon}"')
 end
 `,
-    run = () => {
-        loadJson( 'settings.json' )
+    run = file => {
+        const noti = homedir + '/.config/pianobar/pianobarNotify.rb'
+
+        loadJson( file )
             .then( settings => text( settings.icon ) )
             .then( data => {
-                return logToFile( homedir + '/.config/pianobar/pianobarNotify.rb' ).log( data )
+                return logToFile( noti ).log( data )
+            } ).then( () => {
+                execa( 'chmod', [ '+x', noti ] )
             } )
     }
 if ( !module.parent ) {
-    run()
+    run( 'settings.json' )
 }
-module.exports = () => {
-    return youSure( { message: 'Are you sure that you want to overwrite the script that pianobar calls?' }, run )
+module.exports = file => {
+    return youSure( { message: 'Are you sure that you want to overwrite the script that pianobar calls?' }, () => run( 'settings.json' ) )
 }
 module.exports.run = run

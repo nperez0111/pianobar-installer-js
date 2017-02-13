@@ -8,4 +8,5 @@ module.exports = ( obj, cb ) => inquirer.prompt( [ Object.assign( {
     if ( ans.fix ) {
         return cb()
     }
+    return false
 } )

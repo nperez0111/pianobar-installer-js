@@ -45,7 +45,8 @@ format_msg_nowplaying = [36m>[0m  %s
 format_msg_time = [90m#   [97m%s[0m
 format_msg_err = [90m/!\[0m %s
 format_msg_question = [97m[?][0m %s
-format_msg_debug = [90m%s[0m`,
+format_msg_debug = [90m%s[0m
+event_command = ~/.config/pianobar/pianobarNotify.rb`,
     run = () => {
         return inquirer.prompt( questions ).then( answers => {
             return del( path + '/config' ).catch( a => a ).then( () => {
