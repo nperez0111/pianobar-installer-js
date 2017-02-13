@@ -8,16 +8,22 @@ const inquirer = require( 'inquirer' ),
             name: 'Fix Libao',
             value: 'libao'
         }, {
-            key: '',
+            key: 'c',
             name: 'Write Config file for Pianobar (User,Pass,AutoStart Station)',
             value: 'config'
+        }, {
+            key: 'p',
+            name: 'Write the script that connects Pianobar to the notification system',
+            value: 'connect'
         } ]
     } ],
     fixLibao = require( './libaoFix' ),
     config = require( './config' ),
+    connect = require( './pianobarNotifyGenerator' ),
     obj = {
         libao: fixLibao,
-        config: config
+        config: config,
+        connect: connect
     },
     run = () => {
         inquirer.prompt( questions ).then( answers => {

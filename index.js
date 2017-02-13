@@ -28,7 +28,10 @@ const inquirer = require( 'inquirer' ),
         } ).then( () => {
         //pianobar exists lets keep going
         makedirIfNotExists( path )
-        config()
+        return config()
+
+    } ).then( () => {
+        return execa( 'mkfifo', [ path + 'ctl' ] )
     } )
 }
 if ( !module.parent ) {

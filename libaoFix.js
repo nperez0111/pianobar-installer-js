@@ -5,7 +5,7 @@ const shared = require( './shared' ),
     execa = require( 'execa' ),
     libaoLoc = '/usr/local/Library/Formula/libao.rb',
     folder = libaoLoc.split( '/' ).slice( -1 ).join( '/' ),
-    inquirer = require( 'inquirer' ),
+    youSure = require( './youSure' ),
     touch = require( 'touch' ),
     run = () => del( libaoLoc ).catch( a => a ).then( () => {
         return readFile( 'libaoFix.txt' ).then( data => {
@@ -33,13 +33,6 @@ if ( !module.parent ) {
     run()
 }
 module.exports = () => {
-    return inquirer.prompt( [ {
-        type: 'confirm',
-        message: 'You sure you want to fix Libao?',
-        name: 'fix'
-    } ] ).then( ans => {
-        if ( ans.fix ) {
-            return run()
-        }
-    } )
+    return youSure( { message: 'You sure you want to fix Libao?' }, run )
 }
+module.exports.run = run
