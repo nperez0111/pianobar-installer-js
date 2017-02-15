@@ -1,39 +1,34 @@
 const homedir = require( 'homedir' )(),
     youSure = require( './youSure' ),
-    loadJson = require( 'load-json-file' ),
     logToFile = require( './shared' ).logToAFile,
-    execa = require( 'execa' ),
-    text = ( { appIcon = homedir + '/.config/pianobar/PandoraIco.png' } ) => `
-#!/usr/bin/ruby
+    text = ( { homedir } ) => `#!/usr/bin/ruby
 require 'json'
 trigger = ARGV.shift
-appIcon = "${appIcon}"
 songinfo = {}
 STDIN.each_line { |line| songinfo.store(*line.chomp.split('=', 2))}
 File.open("${homedir}/.config/pianobar/cur.json","w") do |f|
   f.write(songinfo.to_json)
 end
 if trigger == 'songstart' 
-	system('cd ${homedir}/.config/pianobar && node index.js clearPlaying && node index.js')
+	system('cd ${homedir}/.config/pianobar && notifier clearPlaying && notifier')
 elsif trigger == 'userlogin'
-	system('terminal-notifier -title "Pianobar Started" -message "Welcome back" -group "Pianobar" -appIcon "#{appIcon}"')
+	system('notifier login')
 end
 `,
     run = file => {
         const noti = homedir + '/.config/pianobar/pianobarNotify.rb'
 
-        loadJson( file )
-            .then( settings => text( settings.icon ) )
-            .then( data => {
-                return logToFile( noti ).log( data )
-            } ).then( () => {
-                execa( 'chmod', [ '+x', noti ] )
-            } )
+        const logger = logToFile( noti )
+        logger.log( text( { homedir: homedir } ) )
+        logger.makeExecutable( function () {
+
+        } )
+
     }
 if ( !module.parent ) {
-    run( 'settings.json' )
+    youSure( { message: 'Are you sure that you want to overwrite the script that pianobar calls?' }, () => run() )
 }
 module.exports = file => {
-    return youSure( { message: 'Are you sure that you want to overwrite the script that pianobar calls?' }, () => run( 'settings.json' ) )
+    return youSure( { message: 'Are you sure that you want to overwrite the script that pianobar calls?' }, () => run() )
 }
 module.exports.run = run

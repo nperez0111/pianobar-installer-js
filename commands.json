@@ -1,0 +1,19 @@
+{
+    "labels": {
+        "Next Song": "nextSong",
+        "Like Song": "likeSong",
+        "Dislike Song": "dislike",
+        "Start": [ "Start" ],
+        "Select Station": "selectStation",
+        "Clear Now Playing": "clearPlaying",
+        "Quit": "quit"
+    },
+    "command": [
+        "export PATH=/usr/local/bin:$PATH; if [[ -n `pidof pianobar` ]];then; notifier ",
+        true,
+        "; fi "
+    ],
+    "specialCommand": {
+        "Start": "export PATH=/usr/local/bin:$PATH; notifier start"
+    }
+}

@@ -4,6 +4,14 @@ const inquirer = require( 'inquirer' ),
         message: 'What would you like to do?',
         name: 'menu',
         choices: [ {
+            key: 's',
+            name: 'Simple Installer of Pianobar',
+            value: 'simple'
+        }, {
+            key: 'a',
+            name: 'Advanced Installer for shortcuts to Pianobar',
+            value: 'advanced'
+        }, {
             key: 'l',
             name: 'Fix Libao',
             value: 'libao'
@@ -20,10 +28,14 @@ const inquirer = require( 'inquirer' ),
     fixLibao = require( './libaoFix' ),
     config = require( './config' ),
     connect = require( './pianobarNotifyGenerator' ),
+    advanced = require( './advancedInstall' ),
+    simple = require( './index.js' ),
     obj = {
         libao: fixLibao,
         config: config,
-        connect: connect
+        connect: connect,
+        simple: simple,
+        advanced: advanced
     },
     run = () => {
         inquirer.prompt( questions ).then( answers => {

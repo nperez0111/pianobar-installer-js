@@ -25,6 +25,8 @@
     "homedir": "^0.6.0",
     "inquirer": "^3.0.1",
     "load-json-file": "^2.0.0",
+    "pianobar-installer": "github:nperez0111/pianobar-notifier",
+    "pianobar-notifier": "github:nperez0111/pianobar-notifier",
     "touch": "^1.0.0",
     "write-json-file": "^2.0.0"
   }
