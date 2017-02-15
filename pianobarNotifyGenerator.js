@@ -10,9 +10,9 @@ File.open("${homedir}/.config/pianobar/cur.json","w") do |f|
   f.write(songinfo.to_json)
 end
 if trigger == 'songstart' 
-	system('cd ${homedir}/.config/pianobar && notifier clearPlaying && notifier')
+    system('cd ${homedir}/.config/pianobar && notifier clearPlaying && notifier')
 elsif trigger == 'userlogin'
-	system('notifier login')
+    system('notifier login')
 end
 `,
     run = file => {
@@ -20,8 +20,10 @@ end
 
         const logger = logToFile( noti )
         logger.log( text( { homedir: homedir } ) )
-        logger.makeExecutable( function () {
-
+        return new Promise( function ( resolve ) {
+            logger.makeExecutable( function () {
+                resolve( true )
+            } )
         } )
 
     }
