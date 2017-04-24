@@ -2,6 +2,7 @@ const inquirer = require( 'inquirer' ),
     homedir = require( 'homedir' ),
     path = homedir() + '/.config/pianobar',
     shared = require( './shared' ),
+    del = require( 'del' ),
     logToFile = shared.logToAFile,
     questions = [ {
         type: 'input',
@@ -50,7 +51,7 @@ event_command = ~/.config/pianobar/pianobarNotify.rb`,
     run = () => {
         return inquirer.prompt( questions ).then( answers => {
             return del( path + '/config' ).catch( a => a ).then( () => {
-                return logToFile( path + '/config' ).log( config( answers ) )
+                return logToFile( path + '/config' ).log( text( answers ) )
             } )
         } )
     }
