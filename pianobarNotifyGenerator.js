@@ -15,7 +15,7 @@ elsif trigger == 'userlogin'
     system('notifier login')
 end
 `,
-    run = file => {
+    run = () => {
         const noti = homedir + '/.config/pianobar/pianobarNotify.rb'
 
         const logger = logToFile( noti )
@@ -26,11 +26,14 @@ end
             } )
         } )
 
+    },
+    ask = () => {
+        youSure( { message: 'Are you sure that you want to overwrite the script that pianobar calls?' }, () => run() )
     }
 if ( !module.parent ) {
-    youSure( { message: 'Are you sure that you want to overwrite the script that pianobar calls?' }, () => run() )
+    ask()
 }
 module.exports = file => {
-    return youSure( { message: 'Are you sure that you want to overwrite the script that pianobar calls?' }, () => run() )
+    return ask()
 }
 module.exports.run = run

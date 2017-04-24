@@ -7,9 +7,6 @@ const execa = require( 'execa' ),
     youSure = require( './youSure' ),
     simple = require( './index' ),
     notifyGen = require( './pianobarNotifyGenerator' ),
-    del = require( 'del' ),
-    url = 'https://raw.githubusercontent.com/nperez0111/pianobar-installer/master/WorkFlows.zip',
-    file = url.split( '/' ).slice( -1 ).join( '/' ),
     run = () => {
         return notifyGen()
             .then( pLog( "Notification Generation complete..." ) )
@@ -21,7 +18,7 @@ const execa = require( 'execa' ),
             } ).then( () => {
                 log( `
 
-                    
+
 Setup of keyboard shortcuts complete, likely will require a reboot.
 
 1) Go to Shortcuts > Services

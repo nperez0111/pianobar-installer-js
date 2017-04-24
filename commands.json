@@ -6,10 +6,14 @@
         "Start": [ "Start" ],
         "Select Station": "selectStation",
         "Clear Now Playing": "clearPlaying",
-        "Quit": "quit"
+        "Quit": "quit",
+        "PlayPause": "playPause",
+        "Play": "play",
+        "Pause": "pause",
+        "Current Song": "display"
     },
     "command": [
-        "export PATH=/usr/local/bin:$PATH; if [[ -n `pidof pianobar` ]];then; notifier ",
+        "export PATH=/usr/local/bin:$PATH; if [[ -n `pidof pianobar` ]]; then notifier ",
         true,
         "; fi "
     ],

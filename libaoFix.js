@@ -10,7 +10,7 @@ const shared = require( './shared' ),
     run = () => del( libaoLoc ).catch( a => a ).then( () => {
         return readFile( 'libaoFix.txt' ).then( data => {
 
-            return Promise.resolve( shared.makedirIfNotExists( folder ) )
+            return Promise.resolve( shared.makeDir( folder ) )
                 .then( new Promise( function ( resolve, reject ) {
                     touch( libaoLoc, {}, function () {
                         resolve()
